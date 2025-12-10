@@ -31,18 +31,22 @@ public class Input {
             System.out.println(message);
         }
 
-        T value;
+        T value = null;
         boolean isValid;
         do {
             System.out.print("> ");
-            value = parser.apply(readLine());
-            isValid = validator.test(value);
+            try {
+                value = parser.apply(readLine());
+                isValid = validator.test(value);
+            } catch (Exception e) {
+                isValid = false;
+            }
             if (!isValid) {
                 System.out.println(errorMessage);
             }
         } while (!isValid);
 
-        System.out.println();
+        System.out.println(message);
         return value;
     }
 
@@ -70,19 +74,21 @@ public class Input {
             System.out.print("> ");
             String input = readLine();
 
-            T value = parser.apply(input);
+            try {
+                T value = parser.apply(input);
+                if (value == null) {
+                    System.out.println();
+                    break;
+                }
 
-            if (value == null) {
-                System.out.println();
-                break;
+                if (validator.test(value)) {
+                    values.add(value);
+                    continue;
+                }
+            } catch (Exception e) {
             }
 
-            if (!validator.test(value)) {
-                System.out.println(errorMessage);
-                continue;
-            }
-
-            values.add(value);
+            System.out.println(errorMessage);
         }
 
         return values;
