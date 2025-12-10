@@ -7,12 +7,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Main {
-    public static void main(String[] args) {
-        Terminal t = new Terminal();
+    private static Terminal t = new Terminal();
 
-        System.out.println("Welcome to score stats calculator!");
-        System.out.println("To proceed with the stats, please enter score points.");
-        System.out.println("Use dots to separate decimals. To finish input, press enter.");
+    public static void main(String[] args) {
+        t.out.logln("Welcome to score stats calculator!");
+        t.out.logln("To proceed with the stats, please enter score points.");
+        t.out.logln("Use dots to separate decimals. To finish input, press enter.");
 
         Function<String, Score> parser = (String s) -> {
             if (s == null || s.isEmpty()) return null;
@@ -23,7 +23,7 @@ public class Main {
         List<Score> scores = t.in.getValues("Score points:", parser, validator);
         Stats stats = Stats.of(scores);
 
-        System.out.println("Here's the stats:");
-        System.out.printf("Min: %.2f\nMax: %.2f\nSum: %.2f\nAvg: %.2f\n", stats.min, stats.max, stats.sum, stats.avg);
+        t.out.logln("Here's the stats:");
+        t.out.logf("Min: %.2f\nMax: %.2f\nSum: %.2f\nAvg: %.2f\n", stats.min, stats.max, stats.sum, stats.avg);
     }
 }

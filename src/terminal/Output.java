@@ -8,4 +8,8 @@ public class Output {
     public void logln(String message) {
         System.out.println(message);
     }
+
+    public void logf(String format, Object... args) {
+        System.out.printf(format, args);
+    }
 }
